@@ -1,0 +1,234 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Sharky Studios — a small creative showcase for thoughtful digital experiments." />
+  <title>Sharky Studios — Creative practice</title>
+  <style>
+    :root {
+      --navy-950: #071824;
+      --navy-900: #0b2332;
+      --navy-800: #12374a;
+      --aqua-400: #50e3d1;
+      --aqua-300: #91f4e6;
+      --aqua-100: #e9fffb;
+      --sand: #f7f4ed;
+      --paper: #fffdf9;
+      --ink: #123040;
+      --muted: #5d6e73;
+      --line: rgba(18, 48, 64, .14);
+      --shadow: 0 18px 45px rgba(6, 35, 49, .12);
+      --radius: 18px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--paper);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 16px;
+      line-height: 1.55;
+    }
+    a { color: inherit; }
+    a:focus-visible, button:focus-visible { outline: 3px solid var(--aqua-400); outline-offset: 4px; }
+    .skip-link {
+      position: fixed; left: 16px; top: 12px; z-index: 10;
+      transform: translateY(-160%); padding: 10px 14px; border-radius: 10px;
+      color: var(--navy-950); background: var(--aqua-300); font-weight: 800;
+    }
+    .skip-link:focus { transform: translateY(0); }
+    .wrap { width: min(1120px, calc(100% - 40px)); margin: 0 auto; }
+    .eyebrow {
+      display: inline-flex; align-items: center; gap: 8px;
+      color: var(--aqua-300); font-size: 12px; font-weight: 800; letter-spacing: .16em; text-transform: uppercase;
+    }
+    .eyebrow::before { content: ""; width: 22px; height: 2px; background: var(--aqua-400); }
+    .site-header {
+      position: absolute; inset: 0 0 auto; z-index: 2; color: #fff;
+      border-bottom: 1px solid rgba(255,255,255,.12);
+    }
+    .header-inner { display: flex; align-items: center; justify-content: space-between; min-height: 76px; }
+    .brand { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; font-weight: 900; letter-spacing: -.04em; }
+    .brand-mark { display: grid; place-items: center; width: 34px; height: 34px; border-radius: 11px; color: var(--navy-950); background: var(--aqua-400); font-size: 13px; font-weight: 950; }
+    .nav-list { display: flex; align-items: center; gap: 28px; margin: 0; padding: 0; list-style: none; font-size: 14px; }
+    .nav-list a { color: rgba(255,255,255,.78); text-decoration: none; }
+    .nav-list a:hover { color: #fff; }
+    .menu-button { display: none; border: 1px solid rgba(255,255,255,.3); border-radius: 10px; padding: 9px 12px; color: #fff; background: transparent; font: inherit; font-weight: 750; }
+
+    .hero {
+      position: relative; overflow: hidden; min-height: 700px; display: flex; align-items: center;
+      color: #fff; background: radial-gradient(circle at 82% 35%, rgba(48, 137, 153, .34), transparent 31%), var(--navy-950);
+    }
+    .hero::after {
+      content: ""; position: absolute; width: 560px; height: 560px; right: -180px; bottom: -250px;
+      border: 1px solid rgba(145,244,230,.18); border-radius: 50%; box-shadow: 0 0 0 34px rgba(145,244,230,.04), 0 0 0 68px rgba(145,244,230,.025);
+    }
+    .hero-grid { position: relative; z-index: 1; display: grid; gap: 46px; align-items: center; padding: 150px 0 92px; }
+    .hero-copy { max-width: 650px; }
+    h1, h2, h3, p { margin-top: 0; }
+    h1 { max-width: 760px; margin: 22px 0 24px; font-size: clamp(3.4rem, 12vw, 7.8rem); line-height: .9; letter-spacing: -.085em; }
+    .hero-lede { max-width: 560px; color: rgba(255,255,255,.72); font-size: clamp(1.05rem, 2vw, 1.3rem); }
+    .actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 32px; }
+    .button { min-height: 48px; display: inline-flex; align-items: center; justify-content: center; gap: 9px; padding: 12px 18px; border: 1px solid transparent; border-radius: 12px; font-weight: 850; text-decoration: none; cursor: pointer; }
+    .button-primary { color: var(--navy-950); background: var(--aqua-400); }
+    .button-primary:hover { background: var(--aqua-300); }
+    .button-ghost { color: #fff; border-color: rgba(255,255,255,.26); background: rgba(255,255,255,.05); }
+    .button-ghost:hover { background: rgba(255,255,255,.12); }
+    .hero-note { display: flex; align-items: center; gap: 10px; margin-top: 42px; color: rgba(255,255,255,.52); font-size: 13px; }
+    .hero-note strong { color: var(--aqua-300); }
+    .orbit { position: relative; display: grid; place-items: center; min-height: 270px; }
+    .orbit::before, .orbit::after { content: ""; position: absolute; border: 1px solid rgba(145,244,230,.18); border-radius: 50%; }
+    .orbit::before { width: 250px; height: 250px; }
+    .orbit::after { width: 330px; height: 140px; transform: rotate(-28deg); }
+    .shark-card { position: relative; width: min(100%, 350px); padding: 22px; border: 1px solid rgba(145,244,230,.24); border-radius: 22px; background: linear-gradient(145deg, rgba(27,79,93,.75), rgba(10,35,49,.74)); box-shadow: 0 25px 70px rgba(0,0,0,.28); transform: rotate(4deg); }
+    .card-top { display: flex; justify-content: space-between; align-items: center; color: rgba(255,255,255,.6); font-size: 12px; letter-spacing: .1em; text-transform: uppercase; }
+    .signal { width: 9px; height: 9px; border-radius: 50%; background: var(--aqua-400); box-shadow: 0 0 0 6px rgba(80,227,209,.14); }
+    .wave { height: 120px; display: flex; align-items: end; gap: 7px; margin: 28px 0 18px; padding: 18px; border-radius: 15px; background: rgba(145,244,230,.08); }
+    .wave span { flex: 1; border-radius: 99px 99px 4px 4px; background: linear-gradient(to top, var(--aqua-400), rgba(145,244,230,.4)); }
+    .wave span:nth-child(1) { height: 34%; } .wave span:nth-child(2) { height: 56%; } .wave span:nth-child(3) { height: 44%; } .wave span:nth-child(4) { height: 78%; } .wave span:nth-child(5) { height: 61%; } .wave span:nth-child(6) { height: 91%; } .wave span:nth-child(7) { height: 68%; } .wave span:nth-child(8) { height: 82%; }
+    .card-caption { display: flex; justify-content: space-between; align-items: end; color: #fff; }
+    .card-caption b { display: block; font-size: 1.1rem; } .card-caption small { color: rgba(255,255,255,.56); }
+
+    section { padding: 100px 0; }
+    .section-heading { display: flex; justify-content: space-between; align-items: end; gap: 32px; margin-bottom: 42px; }
+    .section-heading h2 { max-width: 600px; margin: 12px 0 0; font-size: clamp(2.2rem, 5vw, 4.25rem); line-height: .98; letter-spacing: -.065em; }
+    .section-intro { max-width: 360px; margin: 0; color: var(--muted); }
+    .projects { background: var(--sand); }
+    .project-grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 20px; }
+    .project { grid-column: span 4; padding: 14px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--paper); box-shadow: var(--shadow); }
+    .project:nth-child(2) { transform: translateY(28px); } .project:nth-child(3) { transform: translateY(56px); }
+    .project-art { position: relative; min-height: 245px; overflow: hidden; display: flex; align-items: end; padding: 18px; border-radius: 12px; }
+    .project-art::before, .project-art::after { content: ""; position: absolute; }
+    .art-tide { background: linear-gradient(135deg, #0b2332 10%, #1b5868 100%); } .art-tide::before { width: 190px; height: 190px; right: -34px; top: -38px; border: 1px solid rgba(145,244,230,.6); border-radius: 50%; box-shadow: 0 0 0 22px rgba(145,244,230,.08), 0 0 0 44px rgba(145,244,230,.05); } .art-tide::after { width: 200px; height: 58px; left: -16px; bottom: 36px; border-top: 2px solid var(--aqua-300); border-radius: 50%; transform: rotate(-10deg); }
+    .art-signal { background: #eddbc1; } .art-signal::before { width: 155px; height: 155px; left: 22px; top: 20px; border-radius: 50%; background: #ef7d56; box-shadow: 85px 66px 0 -12px #1a4d59; } .art-signal::after { width: 130px; height: 1px; right: -16px; bottom: 50px; background: #1a4d59; transform: rotate(-25deg); box-shadow: 0 -20px 0 #1a4d59, 0 20px 0 #1a4d59; }
+    .art-drift { background: #d5ece5; } .art-drift::before { width: 180px; height: 220px; left: 50%; top: 50%; border: 1px solid #12374a; border-radius: 52% 48% 42% 58%; transform: translate(-50%,-50%) rotate(28deg); } .art-drift::after { width: 70px; height: 70px; left: 50%; top: 50%; border-radius: 50%; background: #12374a; transform: translate(-50%,-50%); box-shadow: -72px 38px 0 -22px #ef7d56, 76px -40px 0 -27px #ef7d56; }
+    .art-label { position: relative; z-index: 1; padding: 7px 10px; border-radius: 8px; color: #fff; background: rgba(7,24,36,.76); font-size: 12px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; }
+    .project-copy { padding: 18px 6px 6px; } .project-copy h3 { margin-bottom: 6px; font-size: 1.35rem; letter-spacing: -.04em; } .project-copy p { min-height: 50px; margin-bottom: 16px; color: var(--muted); font-size: 14px; }
+    .tag-list { display: flex; flex-wrap: wrap; gap: 7px; margin: 0; padding: 0; list-style: none; } .tag-list li { padding: 5px 9px; border-radius: 99px; color: var(--navy-800); background: var(--aqua-100); font-size: 12px; font-weight: 800; }
+
+    .about-grid { display: grid; grid-template-columns: 1.1fr .9fr; gap: 70px; align-items: center; }
+    .about-copy h2 { max-width: 600px; margin: 12px 0 20px; font-size: clamp(2.3rem, 5vw, 4.4rem); line-height: .98; letter-spacing: -.07em; }
+    .about-copy p { max-width: 620px; color: var(--muted); font-size: 1.08rem; }
+    .principles { display: grid; gap: 14px; padding: 22px; border-radius: var(--radius); color: #fff; background: var(--navy-900); }
+    .principle { display: grid; grid-template-columns: 40px 1fr; gap: 12px; padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,.14); } .principle:last-child { border-bottom: 0; } .principle-number { display: grid; place-items: center; width: 32px; height: 32px; border-radius: 50%; color: var(--navy-950); background: var(--aqua-400); font-size: 13px; font-weight: 900; } .principle b { display: block; margin-bottom: 3px; } .principle span { color: rgba(255,255,255,.62); font-size: 14px; }
+    .closing { padding: 96px 0; color: #fff; background: var(--navy-950); } .closing-grid { display: flex; justify-content: space-between; align-items: end; gap: 40px; } .closing h2 { max-width: 720px; margin: 12px 0 0; font-size: clamp(2.8rem, 7vw, 6rem); line-height: .93; letter-spacing: -.08em; } .closing-copy { max-width: 300px; color: rgba(255,255,255,.62); }
+    footer { padding: 28px 0; color: rgba(255,255,255,.54); background: #05121b; font-size: 13px; } .footer-inner { display: flex; justify-content: space-between; gap: 20px; } footer .brand { color: #fff; } footer a { text-decoration: none; } footer a:hover { color: var(--aqua-300); }
+
+    @media (min-width: 800px) { .hero-grid { grid-template-columns: 1.15fr .85fr; } }
+    @media (max-width: 799px) {
+      .wrap { width: min(100% - 32px, 620px); }
+      .site-header { position: absolute; } .menu-button { display: inline-flex; }
+      .nav-list { position: absolute; top: 68px; left: 16px; right: 16px; display: none; flex-direction: column; align-items: stretch; gap: 0; padding: 8px; border: 1px solid rgba(255,255,255,.18); border-radius: 14px; background: rgba(7,24,36,.98); box-shadow: 0 20px 45px rgba(0,0,0,.28); }
+      .nav-list.is-open { display: flex; } .nav-list a { display: block; padding: 13px 12px; border-radius: 9px; } .nav-list a:hover { background: rgba(255,255,255,.08); }
+      .hero { min-height: 760px; } .hero-grid { padding-top: 135px; } .hero h1 { font-size: clamp(3.3rem, 17vw, 6rem); }
+      .orbit { min-height: 240px; } .shark-card { transform: rotate(2deg); }
+      section { padding: 74px 0; } .section-heading, .closing-grid { display: block; } .section-intro { margin-top: 20px; }
+      .project-grid { display: grid; grid-template-columns: 1fr; } .project { grid-column: auto; } .project:nth-child(2), .project:nth-child(3) { transform: none; }
+      .about-grid { grid-template-columns: 1fr; gap: 36px; } .closing-copy { margin-top: 24px; }
+      .footer-inner { display: block; } .footer-inner p { margin-bottom: 10px; }
+    }
+    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .001ms !important; animation-duration: .001ms !important; } }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="#top" aria-label="Sharky Studios home"><span class="brand-mark" aria-hidden="true">SS</span><span>Sharky Studios</span></a>
+      <button class="menu-button" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+      <nav id="site-nav" aria-label="Primary navigation">
+        <ul class="nav-list">
+          <li><a href="#work">Work</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#contact">Say hello</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main-content">
+    <section class="hero" id="top" aria-labelledby="hero-title">
+      <div class="wrap hero-grid">
+        <div class="hero-copy">
+          <span class="eyebrow">Small creative practice</span>
+          <h1 id="hero-title">Make space for good ideas.</h1>
+          <p class="hero-lede">Sharky Studios is a playful home for thoughtful digital experiments, clear stories, and work-in-progress energy.</p>
+          <div class="actions">
+            <a class="button button-primary" href="#work">Explore the work <span aria-hidden="true">↗</span></a>
+            <a class="button button-ghost" href="#about">The short version</a>
+          </div>
+          <p class="hero-note"><strong>Note:</strong> the pieces below are illustrative concepts, not client work.</p>
+        </div>
+        <div class="orbit" aria-hidden="true">
+          <div class="shark-card">
+            <div class="card-top"><span>Signal / 01</span><span class="signal"></span></div>
+            <div class="wave"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+            <div class="card-caption"><div><b>Find the rhythm</b><small>systems for softer focus</small></div><span>2026</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="projects" id="work" aria-labelledby="work-title">
+      <div class="wrap">
+        <div class="section-heading">
+          <div><span class="eyebrow">Selected concepts</span><h2 id="work-title">A few ideas in motion.</h2></div>
+          <p class="section-intro">Three visual directions made to show range: warm, curious, and always a little aquatic.</p>
+        </div>
+        <div class="project-grid">
+          <article class="project">
+            <div class="project-art art-tide"><span class="art-label">Concept 01</span></div>
+            <div class="project-copy"><h3>Tide Notes</h3><p>A calm visual language for collecting small observations before they disappear.</p><ul class="tag-list"><li>Editorial</li><li>Motion</li></ul></div>
+          </article>
+          <article class="project">
+            <div class="project-art art-signal"><span class="art-label">Concept 02</span></div>
+            <div class="project-copy"><h3>Signal / Soft</h3><p>An identity study about making useful information feel more human.</p><ul class="tag-list"><li>Identity</li><li>Systems</li></ul></div>
+          </article>
+          <article class="project">
+            <div class="project-art art-drift"><span class="art-label">Concept 03</span></div>
+            <div class="project-copy"><h3>Drift Field</h3><p>An interface playground for wandering, sorting, and finding a new point of view.</p><ul class="tag-list"><li>Digital</li><li>Research</li></ul></div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="about" aria-labelledby="about-title">
+      <div class="wrap about-grid">
+        <div class="about-copy"><span class="eyebrow">About the studio</span><h2 id="about-title">Curious by default. Clear on purpose.</h2><p>Sharky Studios is a fictional creative practice built for this showcase. The approach is simple: notice what matters, give it a distinct shape, and leave enough room for people to think.</p><p>No big claims. No invented clients. Just a growing shelf of illustrative ideas.</p></div>
+        <div class="principles" aria-label="Studio principles">
+          <div class="principle"><span class="principle-number">01</span><div><b>Start with a question</b><span>Curiosity is a better brief than certainty.</span></div></div>
+          <div class="principle"><span class="principle-number">02</span><div><b>Make it legible</b><span>Good work should invite people in.</span></div></div>
+          <div class="principle"><span class="principle-number">03</span><div><b>Keep a little wonder</b><span>Useful does not have to mean ordinary.</span></div></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="closing" id="contact" aria-labelledby="contact-title">
+      <div class="wrap closing-grid"><div><span class="eyebrow">End of the scroll</span><h2 id="contact-title">Keep making room.</h2></div><p class="closing-copy">This is a static showcase with no contact form or backend attached. For now, let the ideas breathe.</p></div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap footer-inner"><p><a class="brand" href="#top"><span class="brand-mark" aria-hidden="true">SS</span><span>Sharky Studios</span></a></p><p>Illustrative portfolio · <span id="year"></span></p></div>
+  </footer>
+
+  <script>
+    const menuButton = document.querySelector('.menu-button');
+    const navList = document.querySelector('.nav-list');
+    menuButton.addEventListener('click', () => {
+      const isOpen = navList.classList.toggle('is-open');
+      menuButton.setAttribute('aria-expanded', String(isOpen));
+      menuButton.textContent = isOpen ? 'Close' : 'Menu';
+    });
+    navList.querySelectorAll('a').forEach(link => link.addEventListener('click', () => {
+      navList.classList.remove('is-open');
+      menuButton.setAttribute('aria-expanded', 'false');
+      menuButton.textContent = 'Menu';
+    }));
+    document.querySelector('#year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
